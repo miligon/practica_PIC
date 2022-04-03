@@ -1,22 +1,19 @@
 #include <main.h>
 
-char recieved[64]; // Buffer de recepcion para datos USB Serial
+char recieved[64];
+char * TxBuffer;
 char i = 0;
-char c = 0; 
-int1 motor_status = 0; // Guarda el estado del motor
+char c = 0;
+int1 motor_status = 0;
 
-volatile int16 pulsos = 0; // contador de pulsos interrupcionj
-volatile int16 indice = 0; // indice datos medicion
-volatile int16 data[278];  // Buffer para datos medicion 556 bytes RAM
-volatile int8 data_ready = 0; // bandera para saber el estado de la medicion
-                              // 0 -> No se ha realizado medicion
-                              // 1 -> Medicion en proceso
-                              // 2 -> Medicion finalizada
+volatile int16 pulsos = 0;
+volatile int16 indice = 0;
+volatile int16 data[278]; // 556 bytes RAM
+volatile int8 data_ready = 0;
 
 #INT_RTCC
 void timer0(void)
 {
-   // Toma una medidicon cada 5.4ms
    if ( indice < 278 && data_ready == 1)
    {
       data[indice] = pulsos * 185;
@@ -33,7 +30,6 @@ void timer0(void)
 #INT_EXT
 void  EXT_isr(void) 
 {
-   // Cuenta los pulsos en B0 solo cuando data_ready = 1
    if ( data_ready == 1)
    {
       pulsos++;
@@ -42,14 +38,10 @@ void  EXT_isr(void)
 
 char recibir()
 {
-   // Recibe una trama a traves del USB Serial
-   
-   // Limpia el buffer de recepción
    for (i = 0; i < 64; ++i)
    {
       recieved[i] = 0;
    }
-   // Detecta si hay datos para recibir
    if ( usb_cdc_kbhit() )
    {
       c = usb_cdc_getc();
@@ -64,7 +56,7 @@ char recibir()
                ++i;
                recieved[i] = usb_cdc_getc();
             }
-         }while(recieved[i] != '\n'); // Sale del Loop cuando le llega un fin de linea 0x10
+         }while(recieved[i] != '\n');
          return 1;
       }
       return 0;
@@ -75,7 +67,7 @@ char recibir()
    }   
 }
 
-void toggle_motor()
+void toogle_motor()
 {
    motor_status = !motor_status;
    output_bit(MOTOR, motor_status);
@@ -91,20 +83,15 @@ void blink_led(int ms)
 
 void inicia_medicion()
 {
-   // Inicializa las variables para la medicion
    data_ready = 1;
    pulsos = 0;
+   motor_status = 1;
    indice = 0;
-   
-   //Configura el Timer0
    setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);      //5.4 ms overflow
 
    enable_interrupts(INT_EXT);
    enable_interrupts(INT_RTCC);
    enable_interrupts(GLOBAL);
-   
-   // Activa el motor
-   motor_status = 1;
    output_bit(MOTOR, motor_status);
 }
 
@@ -112,23 +99,21 @@ void finaliza_medicion()
 {
    disable_interrupts(INT_EXT);
    disable_interrupts(INT_RTCC);
-   // Desactiva el motor
    motor_status = 0;
    output_bit(MOTOR, motor_status);
 }
 
 void send_data()
 {
-   Envia la informacion
    int16 ms = 54;
    usb_cdc_putc(35); //#
    for (int16 i = 0; i < 278; ++i)
    {
-      usb_cdc_putc((ms&0xFF00)>>8); //1 byte MSB  tiempo
-      usb_cdc_putc(ms&0xFF);        //1 byte LSB  tiempo
-      usb_cdc_putc(',');            // separador ,  
-      usb_cdc_putc((data[i]&0xFF00)>>8); //1 byte MSB  rpms
-      usb_cdc_putc(data[i]&0xFF);        //1 byte LSB  rpms
+      usb_cdc_putc((ms&0xFF00)>>8);
+      usb_cdc_putc(ms&0xFF);
+      usb_cdc_putc(',');
+      usb_cdc_putc((data[i]&0xFF00)>>8);
+      usb_cdc_putc(data[i]&0xFF);
       ms = ms + 54;
       if (i != 277)
       {
@@ -140,7 +125,7 @@ void send_data()
 
 void main()
 {
-   //Inicializa CDC
+   
    usb_init();
    usb_cdc_init();
    while(!usb_cdc_connected()){blink_led(300);}
@@ -148,20 +133,19 @@ void main()
    //Example blinking LED program
    while(true)
    {
+      if (data_ready == 1)
+      {
+        //printf(usb_cdc_putc, "%u, %u\n",indice, pulsos );
+      }
       if (data_ready == 2)
       {
-         //Cuando finaliza una medicion deshabilita las interrupciones
          finaliza_medicion();
       }
       //blink_led(50);
-      
-      // Recibe datos del USB serial
       if (recibir())
       {
-         // Verifica la estructura de la trama
          if (recieved[0] == '#' && recieved[2] == '\n')
          {
-            // Selecciona el caso dependiendo del comando recibido
             switch(recieved[1])
             {
                case '1':
@@ -169,7 +153,7 @@ void main()
                   inicia_medicion();
                   break;
                case '2':
-                  toggle_motor();
+                  toogle_motor();
                   if (!motor_status)
                   {
                      printf(usb_cdc_putc, "#ON\n");

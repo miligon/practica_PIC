@@ -1,9 +1,7 @@
 >>> Warning 203 "C:\Program Files (x86)\PICC\Drivers\pic18_usb.c" Line 690(1,1): Condition always TRUE
->>> Warning 216 "main.c" Line 208(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_token_reset)
->>> Warning 216 "main.c" Line 208(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_cdc_get_discard)
->>> Warning 216 "main.c" Line 208(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_cdc_flush_tx_buffer)
->>> Warning 216 "main.c" Line 208(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_cdc_init)
->>> Warning 202 "main.c" Line 5(8,16): Variable never used:   TxBuffer
-      Memory usage:   ROM=18%      RAM=51% - 54%
-      0 Errors,  6 Warnings.
-Build Successful.
+*** Error 12 "main.c" Line 122(4,9): Undefined identifier   Envia
+*** Error 12 "main.c" Line 127(21,23): Undefined identifier   ms
+*** Error 12 "main.c" Line 128(20,22): Undefined identifier   ms
+*** Error 12 "main.c" Line 132(7,9): Undefined identifier   ms
+      4 Errors,  1 Warnings.
+Build Failed.

@@ -1,6 +1,6 @@
 [PROJECT]
 Target=main.hex
-Processor_Text=PIC18F2550
+Processor_Text=PIC18F4550
 CCSVerions=5.025
 Compiler=PCH
 CCSVersion=5.025
@@ -35,7 +35,7 @@ D1_L11=[83681]Stopped Editing.
 D1_L12=[83743]Started Editing.
 D1_L13=[84255]Stopped Editing.
 D2=02-04-2022
-D2_L=24
+D2_L=25
 D2_L1=[41397]Started Editing.
 D2_L2=[42624]Stopped Editing.
 D2_L3=[43761]Started Editing.
@@ -60,6 +60,7 @@ D2_L21=[62948]Started Editing.
 D2_L22=[63546]Stopped Editing.
 D2_L23=[64819]Started Editing.
 D2_L24=[65313]Stopped Editing.
+D2_L25=[65860]Started Editing.
 
 [Opened Files]
 1=main.c

@@ -1,8 +1,8 @@
-#include <18F4550.h>
+#include <18F2550.h>
 #device ADC=16
 
 
-#fuses HSPLL,NOWDT,NOBROWNOUT,NOPROTECT,NOLVP,NODEBUG,USBDIV,PLL5,CPUDIV1,VREGEN,MCLR,NOPBADEN
+#fuses HSPLL,NOWDT,NOBROWNOUT,NOPROTECT,NOLVP,NODEBUG,USBDIV,PLL3,CPUDIV1,VREGEN,MCLR,NOPBADEN
 
 #use delay(clock=48MHz,crystal=20MHz,USB_FULL)
 #define LED   PIN_B2
@@ -25,10 +25,10 @@ char const USB_STRING_DESC[]={
    //string 1 - manufacturer
       10,  //length of string index
       0x03,  //descriptor type (STRING)
-      'h',0,
-      'o',0,
-      'l',0,
-      'a',0,
+      'm',0,
+      'i',0,
+      'k',0,
+      'e',0,
    //string 2 - product
       10,  //length of string index
       0x03,  //descriptor type (STRING)

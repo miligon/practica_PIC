@@ -91,20 +91,15 @@ void blink_led(int ms)
 
 void inicia_medicion()
 {
-   // Inicializa las variables para la medicion
    data_ready = 1;
    pulsos = 0;
+   motor_status = 1;
    indice = 0;
-   
-   //Configura el Timer0
    setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);      //5.4 ms overflow
 
    enable_interrupts(INT_EXT);
    enable_interrupts(INT_RTCC);
    enable_interrupts(GLOBAL);
-   
-   // Activa el motor
-   motor_status = 1;
    output_bit(MOTOR, motor_status);
 }
 
@@ -112,23 +107,21 @@ void finaliza_medicion()
 {
    disable_interrupts(INT_EXT);
    disable_interrupts(INT_RTCC);
-   // Desactiva el motor
    motor_status = 0;
    output_bit(MOTOR, motor_status);
 }
 
 void send_data()
 {
-   Envia la informacion
    int16 ms = 54;
    usb_cdc_putc(35); //#
    for (int16 i = 0; i < 278; ++i)
    {
-      usb_cdc_putc((ms&0xFF00)>>8); //1 byte MSB  tiempo
-      usb_cdc_putc(ms&0xFF);        //1 byte LSB  tiempo
-      usb_cdc_putc(',');            // separador ,  
-      usb_cdc_putc((data[i]&0xFF00)>>8); //1 byte MSB  rpms
-      usb_cdc_putc(data[i]&0xFF);        //1 byte LSB  rpms
+      usb_cdc_putc((ms&0xFF00)>>8);
+      usb_cdc_putc(ms&0xFF);
+      usb_cdc_putc(',');
+      usb_cdc_putc((data[i]&0xFF00)>>8);
+      usb_cdc_putc(data[i]&0xFF);
       ms = ms + 54;
       if (i != 277)
       {
