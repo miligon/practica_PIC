@@ -1,0 +1,46 @@
+#include <18F2550.h>
+#device ADC=16
+
+#FUSES NOWDT                 	//No Watch Dog Timer
+#FUSES WDT128                	//Watch Dog Timer uses 1:128 Postscale
+#FUSES NOBROWNOUT            	//No brownout reset
+#FUSES NOLPT1OSC             	//Timer1 configured for higher power operation
+#FUSES NOLVP                 	//No low voltage prgming, B3(PIC16) or B5(PIC18) used for I/O
+#FUSES NOXINST               	//Extended set extension and Indexed Addressing mode disabled (Legacy mode)
+
+#use delay(clock=48MHz,crystal=12MHz,USB_FULL)
+#define LED	PIN_B2
+
+
+#define LED PIN_B2
+#define DELAY 500
+
+
+#define USB_CONFIG_BUS_POWER 100
+#define USB_STRINGS_OVERWRITTEN
+
+char USB_STRING_DESC_OFFSET[]={0,4,14};
+
+char const USB_STRING_DESC[]={
+   //string 0 - language
+      4,  //length of string index
+      0x03,  //descriptor type (STRING)
+      0x09,0x04,  //Microsoft Defined for US-English
+   //string 1 - manufacturer
+      10,  //length of string index
+      0x03,  //descriptor type (STRING)
+      'm',0,
+      'i',0,
+      'k',0,
+      'e',0,
+   //string 2 - product
+      10,  //length of string index
+      0x03,  //descriptor type (STRING)
+      'u',0,
+      'a',0,
+      'r',0,
+      't',0
+};
+
+#include <usb_cdc.h>
+

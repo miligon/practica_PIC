@@ -1,0 +1,80 @@
+[PROJECT]
+Target=main.hex
+Processor_Text=PIC18F2550
+CCSVerions=5.025
+Compiler=PCH
+CCSVersion=5.025
+[Target Data]
+FileList=main.c
+[Directories]
+Include=
+[D:\nextcloud\Mis Documentos\Documentos\1 MLG\Escuela\MAESTRIA\2° Semestre\SISTEMAS PROGRAMABLES\CCS\usb\main]
+Type=4
+[mru-list]
+1=main.c
+
+[ProjectLog]
+Days=2
+D1=01-04-2022
+D1_L=13
+D1_L1=[76217]Project Opened.
+D1_L2=[76313]Started Editing.
+D1_L3=[77440]Stopped Editing.
+TotalEdit=14
+TotalDebug=0
+D1_E=14
+D1_D=0
+D1_L4=[77879]Project Closed.
+D1_L5=[77890]Project Opened.
+D1_L6=[77902]Started Editing.
+D1_L7=[79223]Stopped Editing.
+D1_L8=[80230]Started Editing.
+D1_L9=[80532]Stopped Editing.
+D1_L10=[83381]Started Editing.
+D1_L11=[83681]Stopped Editing.
+D1_L12=[83743]Started Editing.
+D1_L13=[84255]Stopped Editing.
+D2=02-04-2022
+D2_L=24
+D2_L1=[41397]Started Editing.
+D2_L2=[42624]Stopped Editing.
+D2_L3=[43761]Started Editing.
+D2_L4=[46240]Stopped Editing.
+D2_L5=[46275]Started Editing.
+D2_L6=[46576]Stopped Editing.
+D2_L7=[47270]Started Editing.
+D2_L8=[48104]Stopped Editing.
+D2_L9=[48442]Started Editing.
+D2_L10=[49933]Stopped Editing.
+D2_L11=[50919]Started Editing.
+D2_L12=[51439]Stopped Editing.
+D2_L13=[52359]Started Editing.
+D2_L14=[55086]Stopped Editing.
+D2_L15=[58599]Started Editing.
+D2_L16=[58899]Stopped Editing.
+D2_L17=[59121]Started Editing.
+D2_L18=[59424]Stopped Editing.
+D2_L19=[62137]Started Editing.
+D2_L20=[62756]Stopped Editing.
+D2_L21=[62948]Started Editing.
+D2_L22=[63546]Stopped Editing.
+D2_L23=[64819]Started Editing.
+D2_L24=[65313]Stopped Editing.
+
+[Opened Files]
+1=main.c
+2=C:\Program Files (x86)\PICC\Devices\18F2550.h
+3=main.h
+4=C:\Program Files (x86)\PICC\Drivers\usb_cdc.h
+5=C:\Program Files (x86)\PICC\Drivers\usb_desc_cdc.h
+6=main.tre
+7=main.lst
+8=main.sym
+9=C:\Program Files (x86)\PICC\Drivers\pic18_usb.c
+10=main.cof.txt
+11=
+[main.c]
+Type=4
+[Units]
+Count=1
+1=main (main)
