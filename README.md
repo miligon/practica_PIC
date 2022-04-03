@@ -1,6 +1,6 @@
 Requiere:
 
-    mathploylib
+    matplotlib
     pyqt5
     pyserial
 
