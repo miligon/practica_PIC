@@ -14,7 +14,7 @@
    ³  ÃÄblink_led  0/24  Ram=1
    ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ³  ÀÄ@delay_ms1  0/42  Ram=1
-   ³  ÃÄfinaliza_medicion  0/22  Ram=0
+   ³  ÃÄfinaliza_medicion  0/30  Ram=0
    ³  ÃÄrecibir  0/148  Ram=2
    ³  ³  ÃÄusb_cdc_getc  0/56  Ram=2
    ³  ³  ³  ÀÄusb_cdc_get_discard  0/16  Ram=0
@@ -58,7 +58,9 @@
    ³  ³  ÀÄ*
    ³  ÃÄ@PSTRINGC_661  0/32  Ram=2
    ³  ³  ÀÄ*
-   ³  ÃÄsend_data  0/228  Ram=4
+   ³  ÃÄsend_data  0/238  Ram=4
+   ³  ³  ÃÄusb_cdc_putc  0/18  Ram=1
+   ³  ³  ³  ÀÄ*
    ³  ³  ÃÄusb_cdc_putc  0/18  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄusb_cdc_putc  0/18  Ram=1
@@ -204,4 +206,4 @@
    ³        ÀÄ*
    ÃÄtimer0  0/106  Ram=2
    ³  ÀÄ@MUL1616  0/34  Ram=5
-   ÀÄEXT_isr  0/24  Ram=0
+   ÀÄEXT_isr  0/28  Ram=0

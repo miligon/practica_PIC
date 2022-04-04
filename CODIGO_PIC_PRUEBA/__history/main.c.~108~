@@ -116,7 +116,6 @@ void finaliza_medicion()
    // Desactiva el motor
    motor_status = 0;
    output_bit(MOTOR, motor_status);
-   data_ready = 3;
 }
 
 void send_data()
@@ -137,7 +136,6 @@ void send_data()
          usb_cdc_putc(36); //$
       }
    }
-   usb_cdc_putc(13); // \r
    usb_cdc_putc(10); // \n
 }
 
@@ -207,7 +205,7 @@ void main()
                   }
                   break;
                case '5':
-                  if ( data_ready == 3 )
+                  if ( data_ready == 2 )
                   {
                      send_data();
                   }

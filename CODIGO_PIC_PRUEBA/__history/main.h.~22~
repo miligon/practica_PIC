@@ -4,7 +4,7 @@
 
 #fuses HSPLL,NOWDT,NOBROWNOUT,NOPROTECT,NOLVP,NODEBUG,USBDIV,PLL3,CPUDIV1,VREGEN,MCLR,NOPBADEN
 
-#use delay(clock=48MHz,crystal=12MHz,USB_FULL)
+#use delay(clock=48MHz,crystal=20MHz,USB_FULL)
 #define LED   PIN_B2
 #define MOTOR PIN_B3
 #define SENSOR PIN_B0

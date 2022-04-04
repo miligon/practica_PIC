@@ -12,6 +12,7 @@ from matplotlib.backends.backend_qtagg import (
 from matplotlib.figure import Figure
 import serial
 import time
+import math
 
 # -----------------------------------------------------
 #                 CLASE PARA LA GUI
@@ -41,6 +42,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btnConectar.clicked.connect(self.conectar)
         self.btnMotor.clicked.connect(self.toggle_motor)
         self.btnAdquirir.clicked.connect(self.adquirir)
+        self.radioSub.clicked.connect(self.calcular)
+        self.radioSobre.clicked.connect(self.calcular)
+    
+    def calcular(self):
+        self.datos_rpm = [[],[]]
+        for x in range(0, 14958,54):
+            x= x/10
+            wn=float(self.txtWn.text()) #0.0003
+            z=float(self.txtZ.text())   #0.00008
+            # 1-math.cos(wn*x)
+            # (1/(wn**2))*(1-math.exp(-wn*x)-(wn*x*math.exp(wn*x)))
+            self.datos_rpm[0].append(x)
+            self.datos_rpm[1].append((1/(wn*wn))*(1-math.exp(-1*wn*x)-(wn*x*math.exp(-1+wn*x))))
+        self.graficar()
+            
     
     def graficar(self):
         #Limpia la figura
@@ -67,7 +83,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         puerto = self.txtPuerto.text()
         self.ser = serial.Serial(puerto, 9600, timeout=3, parity=serial.PARITY_NONE, rtscts=0)
         # Limpia la información en el buffer de entrada
-        cleanInputBuffer()
+        self.cleanInputBuffer()
         # Pide el estado del motor
         self.ser.write("#3\n".encode("ASCII"))
         estado=self.ser.readline().decode("ASCII")
@@ -81,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def adquirir(self):
         print("adquirir")
         # Limpia la información en el buffer de entrada
-        cleanInputBuffer()
+        self.cleanInputBuffer()
         #Envia comando de inicio
         self.ser.write("#1\n".encode("ASCII"))
         self.ser.flush()
@@ -102,15 +118,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Envia comando para pedir datos
         self.ser.write("#5\n".encode("ASCII"))
         self.ser.flush()
-        c = self.ser.readline()
+        c = self.ser.read_until(expected='\r\n')
         print(c)
         # Decodifica y gráfica la informacion
         self.decode_data(c)
         
     def toggle_motor(self):
-        self.ser.write("\n".encode("ASCII"))
-        self.ser.flush()
-        self.ser.reset_input_buffer()
+        self.cleanInputBuffer()
         self.ser.write("#2\n".encode("ASCII"))
         self.ser.flush()
         estado=self.ser.readline().decode("ASCII")
@@ -135,7 +149,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     data = pair.split(b',')
                     t = int.from_bytes(data[0], byteorder="big")
                     rpm = int.from_bytes(data[1], byteorder="big")
-                    self.datos_rpm[0].append(t)
+                    self.datos_rpm[0].append(t/10)
                     self.datos_rpm[1].append(rpm)
             #Imprime la informacion recibida y la gráfica
             print(self.datos_rpm)

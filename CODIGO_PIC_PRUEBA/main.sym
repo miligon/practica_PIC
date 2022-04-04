@@ -284,55 +284,55 @@ ROM Allocation:
 0010DC  usb_isr
 00115A  timer0
 0011C4  EXT_isr
-0011DC  @const1171.call
-0011E2  @const1173.call
-0011E8  @const1174.call
-0011EE  @const1175.call
-0011F4  @const1176.call
-0011FA  @const1177.call
-001202  @const1178.call
-00120A  @const1179.call
-001216  @const1180.call
-001220  usb_detach
-00124A  usb_init_cs
-001250  usb_attach
-00127E  usb_task
-0012A2  usb_init
-0012B0  @delay_ms1
-0012DA  blink_led
-0012F2  finaliza_medicion
-001308  usb_cdc_getc
-001340  recibir
-0013D4  _usb_cdc_putc_fast_noflush
-00140C  usb_cdc_putc_fast
-001424  usb_cdc_putc
-001436  @PSTRINGC_661
-001456  inicia_medicion
-001484  toggle_motor
-001496  send_data
-00157A  MAIN
-00157A  @cinit1
-00159E  @cinit2
+0011E0  @const1171.call
+0011E6  @const1173.call
+0011EC  @const1174.call
+0011F2  @const1175.call
+0011F8  @const1176.call
+0011FE  @const1177.call
+001206  @const1178.call
+00120E  @const1179.call
+00121A  @const1180.call
+001224  usb_detach
+00124E  usb_init_cs
+001254  usb_attach
+001282  usb_task
+0012A6  usb_init
+0012B4  @delay_ms1
+0012DE  blink_led
+0012F6  finaliza_medicion
+001314  usb_cdc_getc
+00134C  recibir
+0013E0  _usb_cdc_putc_fast_noflush
+001418  usb_cdc_putc_fast
+001430  usb_cdc_putc
+001442  @PSTRINGC_661
+001462  inicia_medicion
+001490  toggle_motor
+0014A2  send_data
+001590  MAIN
+001590  @cinit1
+0015B4  @cinit2
 
 Project Directory:
     D:\nextcloud\Mis Documentos\Documentos\1 MLG\Escuela\MAESTRIA\2° Semestre\SISTEMAS PROGRAMABLES\CCS\usb\
 
 Project Files:
-    main.c                                                  [02-abr.-22 18:27  CRC=009EBE23]
-    main.h                                                  [02-abr.-22 18:18  CRC=106CFAB3]
-    C:\Program Files (x86)\PICC\Devices\18F4550.h           [18-abr.-14 16:57  CRC=68697302]
-    C:\Program Files (x86)\PICC\Drivers\usb_cdc.h           [16-dic.-13 16:39  CRC=18A00DA3]
-    C:\Program Files (x86)\PICC\Drivers\pic18_usb.h         [11-mar.-13 16:56  CRC=A13AD10C]
-    C:\Program Files (x86)\PICC\Drivers\usb_hw_layer.h      [31-ago.-10 14:26  CRC=8105D92F]
-    C:\Program Files (x86)\PICC\Drivers\usb_desc_cdc.h      [30-oct.-13 09:44  CRC=887E0475]
-    C:\Program Files (x86)\PICC\Drivers\usb.h               [26-feb.-13 14:40  CRC=0402FA1E]
-    C:\Program Files (x86)\PICC\Drivers\usb.c               [09-jul.-13 14:06  CRC=88E8C8E2]
-    C:\Program Files (x86)\PICC\Drivers\pic18_usb.c         [10-mar.-14 12:46  CRC=C91F1358]
-    C:\Program Files (x86)\PICC\Drivers\string.h            [10-abr.-14 09:04  CRC=662B2714]
-    C:\Program Files (x86)\PICC\Drivers\stddef.h            [16-jul.-10 09:27  CRC=897CEC6C]
-    C:\Program Files (x86)\PICC\Drivers\ctype.h             [03-ene.-08 13:55  CRC=2D1F019F]
+    main.c                                                  [03-abr.-22 17:20  CRC=DB944569]
+    main.h                                                  [03-abr.-22 17:11  CRC=106CFAB3]
+    C:\Program Files (x86)\PICC\Devices\18F4550.h           [18-abr.-14 17:57  CRC=68697302]
+    C:\Program Files (x86)\PICC\Drivers\usb_cdc.h           [16-dic.-13 17:39  CRC=18A00DA3]
+    C:\Program Files (x86)\PICC\Drivers\pic18_usb.h         [11-mar.-13 17:56  CRC=A13AD10C]
+    C:\Program Files (x86)\PICC\Drivers\usb_hw_layer.h      [31-ago.-10 15:26  CRC=8105D92F]
+    C:\Program Files (x86)\PICC\Drivers\usb_desc_cdc.h      [30-oct.-13 10:44  CRC=887E0475]
+    C:\Program Files (x86)\PICC\Drivers\usb.h               [26-feb.-13 15:40  CRC=0402FA1E]
+    C:\Program Files (x86)\PICC\Drivers\usb.c               [09-jul.-13 15:06  CRC=88E8C8E2]
+    C:\Program Files (x86)\PICC\Drivers\pic18_usb.c         [10-mar.-14 13:46  CRC=C91F1358]
+    C:\Program Files (x86)\PICC\Drivers\string.h            [10-abr.-14 10:04  CRC=662B2714]
+    C:\Program Files (x86)\PICC\Drivers\stddef.h            [16-jul.-10 10:27  CRC=897CEC6C]
+    C:\Program Files (x86)\PICC\Drivers\ctype.h             [03-ene.-08 14:55  CRC=2D1F019F]
 
-Source signature=DCC4D541
+Source signature=B7BA5C87
 
 Units:
     main (main)

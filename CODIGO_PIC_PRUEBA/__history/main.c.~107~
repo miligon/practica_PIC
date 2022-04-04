@@ -116,7 +116,6 @@ void finaliza_medicion()
    // Desactiva el motor
    motor_status = 0;
    output_bit(MOTOR, motor_status);
-   data_ready = 3;
 }
 
 void send_data()
@@ -124,7 +123,7 @@ void send_data()
    //Envia la informacion
    int16 ms = 54;
    usb_cdc_putc(35); //#
-   for (int16 i = 0; i < 278; i++)
+   for (int16 i = 0; i < 278; i+)
    {
       usb_cdc_putc((ms&0xFF00)>>8); //1 byte MSB  tiempo
       usb_cdc_putc(ms&0xFF);        //1 byte LSB  tiempo
@@ -137,7 +136,6 @@ void send_data()
          usb_cdc_putc(36); //$
       }
    }
-   usb_cdc_putc(13); // \r
    usb_cdc_putc(10); // \n
 }
 
@@ -207,7 +205,7 @@ void main()
                   }
                   break;
                case '5':
-                  if ( data_ready == 3 )
+                  if ( data_ready == 2 )
                   {
                      send_data();
                   }
