@@ -180,22 +180,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Limpia la información en el buffer de entrada
         self.cleanInputBuffer()
         #Envia comando de inicio
-        self.ser.write("#1\n".encode("ASCII"))
-        self.ser.flush()
-        print(self.ser.readline())
-        c = "BUSY"
-        t = 0
-        print("esperando",end='')
-        while ("BUSY" in c and t < 20):  # Timeout de 2000ms 
-            # Envia comando para preguntar estado
-            self.ser.write("#4\n".encode("ASCII"))
-            self.ser.flush()
-            c = self.ser.readline().decode("ASCII")
-            print(".",end='')
-            time.sleep(0.5)
-            t = t + 1
+        # self.ser.write("#1\n".encode("ASCII"))
+        # self.ser.flush()
+        # print(self.ser.readline())
+        # c = "BUSY"
+        # t = 0
+        # print("esperando",end='')
+        # while ("BUSY" in c and t < 20):  # Timeout de 2000ms 
+        #     # Envia comando para preguntar estado
+        #     self.ser.write("#4\n".encode("ASCII"))
+        #     self.ser.flush()
+        #     c = self.ser.readline().decode("ASCII")
+        #     print(".",end='')
+        #     time.sleep(0.5)
+        #     t = t + 1
         
-        print("\nmedicion finalizada, pidiendo datos . . .")
+        # print("\nmedicion finalizada, pidiendo datos . . .")
         # Envia comando para pedir datos
         self.ser.write("#5\n".encode("ASCII"))
         self.ser.flush()
