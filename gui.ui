@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>645</height>
+    <width>1007</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,7 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>810</x>
       <y>10</y>
       <width>191</width>
       <height>61</height>
@@ -97,7 +97,7 @@
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>561</width>
+      <width>991</width>
       <height>431</height>
      </rect>
     </property>
@@ -107,8 +107,8 @@
      <rect>
       <x>10</x>
       <y>520</y>
-      <width>561</width>
-      <height>80</height>
+      <width>671</width>
+      <height>101</height>
      </rect>
     </property>
     <property name="title">
@@ -146,8 +146,8 @@
     <widget class="QLineEdit" name="txtWn">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>30</y>
+       <x>50</x>
+       <y>60</y>
        <width>113</width>
        <height>23</height>
       </rect>
@@ -156,17 +156,110 @@
     <widget class="QLineEdit" name="txtZ">
      <property name="geometry">
       <rect>
-       <x>430</x>
-       <y>30</y>
+       <x>210</x>
+       <y>60</y>
        <width>113</width>
        <height>23</height>
       </rect>
      </property>
     </widget>
+    <widget class="QLineEdit" name="txtAlpha">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>60</y>
+       <width>113</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Wn</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>60</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ζ</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>60</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>α</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtK">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>60</y>
+       <width>113</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>60</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>K</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>520</y>
+      <width>311</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/img/s1.PNG)</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="imagenes.qrc"/>
+ </resources>
  <connections/>
 </ui>

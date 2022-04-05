@@ -13,6 +13,8 @@ from matplotlib.figure import Figure
 import serial
 import time
 import math
+import statistics
+import img
 
 # -----------------------------------------------------
 #                 CLASE PARA LA GUI
@@ -25,7 +27,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.datos_rpm = [[0,10,20,30,50,70,80],
                      [0,0,0,0,0,0,0]]
-        
+        self.calcular()
         # Crea la gráfica y agrega el widget correspondiente
         self.figure, self.axes = plt.subplots()
         self.layout = QtWidgets.QVBoxLayout(self.widget)
@@ -42,22 +44,100 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btnConectar.clicked.connect(self.conectar)
         self.btnMotor.clicked.connect(self.toggle_motor)
         self.btnAdquirir.clicked.connect(self.adquirir)
-        self.radioSub.clicked.connect(self.calcular)
-        self.radioSobre.clicked.connect(self.calcular)
+        self.radioSub.clicked.connect(self.calcularSub)
+        self.radioSobre.clicked.connect(self.calcularSobre)
     
+    def calcularSobre(self):
+        longitud = len(self.datos_rpm[0])
+        val_estables = self.datos_rpm[1][(longitud-int(longitud*0.2)):longitud]
+        val_estable = statistics.mean(val_estables)
+        print(longitud, statistics.mean(val_estables), statistics.stdev(val_estables))
+        alpha = 0.632*val_estable
+        t_alpha = 1
+        print(alpha)
+        for i in range(longitud):
+            dato = self.datos_rpm[1][i]
+            diferencia = (dato - alpha)/alpha
+            if (abs(diferencia) < 0.01):
+                print(i, dato)
+                t_alpha = i
+                
+        aproximacion = [[],[]]
+        k = round(val_estable,4)
+        alpha = round(t_alpha,4)
+        print(1/alpha)
+        for x in range(0, 1000,10):
+            x = x
+            aproximacion[0].append(x)
+            aproximacion[1].append(k*(1-math.exp(-1*(x/alpha))))
+        
+        self.graficar()
+        self.axes = plt.scatter(aproximacion[0], aproximacion[1], zorder=500, s=20, color='blue')
+        self.axes = plt.plot(aproximacion[0], aproximacion[1], 'r', lw=1, color='lightgray')
+        # Refresca la información del Widget
+        self.layout.removeWidget(self.grafica)
+        self.grafica = FigureCanvas(self.figure)
+        self.layout.addWidget(self.grafica)
+        self.frame.setStyleSheet("image: url(:/img/s1.PNG);")
+        self.txtAlpha.setText(str(alpha))
+        self.txtK.setText(str(k))
+        self.txtWn.setText("")
+        self.txtZ.setText("")
+             
+        
+    
+    def calcularSub(self):
+        longitud = len(self.datos_rpm[0])
+        val_estables = self.datos_rpm[1][(longitud-int(longitud*0.2)):longitud]
+        val_estable = statistics.mean(val_estables)
+        print(longitud, statistics.mean(val_estables), statistics.stdev(val_estables))
+        Mp = max(self.datos_rpm[1])
+        t_Mp = self.datos_rpm[1].index(Mp)
+        print(t_Mp, Mp)
+        z = (-1*math.log(Mp/100))/math.sqrt((math.pi*math.pi)+(math.pow(math.log(Mp/100),2)))
+        print(z)
+        z = round(z,4)
+        wn = round(math.pi/(t_Mp*math.sqrt(1-(z*z))),4)
+        aproximacion = [[],[]]
+        k = round(val_estable,4)
+        
+        for x in range(0, 1000,5):
+            x = x
+            aproximacion[0].append(x)
+            # Grafica a partir de los valores calculados
+            aproximacion[1].append(k*(1-(((math.exp(-1*z*wn*x))/(math.sqrt(1-(z*z))))*math.sin((wn*x)+(math.pi/2)))))
+        
+        self.graficar()
+        self.axes = plt.scatter(aproximacion[0], aproximacion[1], zorder=500, s=20, color='blue')
+        self.axes = plt.plot(aproximacion[0], aproximacion[1], 'r', lw=1, color='lightgray')
+        # Refresca la información del Widget
+        self.layout.removeWidget(self.grafica)
+        self.grafica = FigureCanvas(self.figure)
+        self.layout.addWidget(self.grafica)
+        self.frame.setStyleSheet("image: url(:/img/s2.PNG);")
+        self.txtAlpha.setText("")
+        self.txtK.setText(str(k))
+        self.txtWn.setText(str(wn))
+        self.txtZ.setText(str(z))       
+        
+        
+    # Calcula una grafica de prueba 
     def calcular(self):
         self.datos_rpm = [[],[]]
-        for x in range(0, 14958,54):
-            x= x/10
-            wn=float(self.txtWn.text()) #0.0003
-            z=float(self.txtZ.text())   #0.00008
-            # 1-math.cos(wn*x)
-            # (1/(wn**2))*(1-math.exp(-wn*x)-(wn*x*math.exp(wn*x)))
+        wn=0.045 #0.0003    #0.0045
+        z=0.5   #0.00008
+        k = 5
+        
+        alpha = 30
+        for x in range(0, 1000,1):
+            x= x
             self.datos_rpm[0].append(x)
-            self.datos_rpm[1].append((1/(wn*wn))*(1-math.exp(-1*wn*x)-(wn*x*math.exp(-1+wn*x))))
-        self.graficar()
+            #sobre amortiguado
+            self.datos_rpm[1].append(k*(1-math.exp(-1*(x/alpha)))) 
+            # Sub amortiguado
+            #self.datos_rpm[1].append(k*(1-(((math.exp(-1*z*wn*x))/(math.sqrt(1-(z*z))))*math.sin((wn*x)+(math.pi/2))))) 
             
-    
+    # Grafica los datos contenidos en datos_rpm
     def graficar(self):
         #Limpia la figura
         self.figure.clf()
@@ -72,6 +152,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.grafica = FigureCanvas(self.figure)
         self.layout.addWidget(self.grafica)
     
+    #Limpia el buffer de entrada
     def cleanInputBuffer(self):
         # Limpia la información en el buffer de entrada
         self.ser.write("\n".encode("ASCII"))
@@ -84,7 +165,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ser = serial.Serial(puerto, 9600, timeout=3, parity=serial.PARITY_NONE, rtscts=0)
         # Limpia la información en el buffer de entrada
         self.cleanInputBuffer()
-        # Pide el estado del motor
+        # Pide el e9stado del motor
         self.ser.write("#3\n".encode("ASCII"))
         estado=self.ser.readline().decode("ASCII")
         if ("ON" in estado):
