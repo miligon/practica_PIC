@@ -7,39 +7,11 @@ int1 motor_status = 0; // Guarda el estado del motor
 
 volatile int16 pulsos = 0; // contador de pulsos interrupcionj
 volatile int16 indice = 0; // indice datos medicion
-volatile int16 data[278];  // Buffer para datos medicion 556 bytes RAM
+int16 data[]={0, 1417, 2432, 3160, 3682, 4055, 4323, 4515, 4652, 4751, 4821, 4872, 4908, 4934, 4952, 4966, 4975, 4982, 4987, 4991, 4993, 4995, 4996, 4997, 4998, 4998, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999};
 volatile int8 data_ready = 0; // bandera para saber el estado de la medicion
                               // 0 -> No se ha realizado medicion
                               // 1 -> Medicion en proceso
                               // 2 -> Medicion finalizada
-
-#INT_RTCC
-void timer0(void)
-{
-   // Toma una medidicon cada 5.4ms
-   if ( indice < 278 && data_ready == 1)
-   {
-      data[indice] = pulsos * 185;
-      pulsos = 0;
-      indice++;
-   }
-   else
-   {
-      data_ready = 2;
-      
-   }
-}
-
-#INT_EXT
-void  EXT_isr(void) 
-{
-   // Cuenta los pulsos en B0 solo cuando data_ready = 1
-   if ( data_ready == 1)
-   {
-      output_toggle(LED);
-      pulsos++;
-   }
-}
 
 char recibir()
 {
@@ -98,11 +70,11 @@ void inicia_medicion()
    indice = 0;
    
    //Configura el Timer0
-   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);      //5.4 ms overflow
+   //setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);      //5.4 ms overflow
 
-   enable_interrupts(INT_EXT);
-   enable_interrupts(INT_RTCC);
-   enable_interrupts(GLOBAL);
+   //enable_interrupts(INT_EXT);
+   //enable_interrupts(INT_RTCC);
+   //enable_interrupts(GLOBAL);
    
    // Activa el motor
    motor_status = 1;
@@ -122,16 +94,16 @@ void finaliza_medicion()
 void send_data()
 {
    //Envia la informacion
-   int16 ms = 54;
+   int16 ms = 0;
    usb_cdc_putc(35); //#
-   for (int16 i = 0; i < 278; i++)
+   for (int16 i = 0; i < 100; i++)
    {
       usb_cdc_putc((ms&0xFF00)>>8); //1 byte MSB  tiempo
       usb_cdc_putc(ms&0xFF);        //1 byte LSB  tiempo
       usb_cdc_putc(',');            // separador ,  
       usb_cdc_putc((data[i]&0xFF00)>>8); //1 byte MSB  rpms
       usb_cdc_putc(data[i]&0xFF);        //1 byte LSB  rpms
-      ms = ms + 54;
+      ms = ms + 1;
       if (i != 277)
       {
          usb_cdc_putc(36); //$
@@ -207,15 +179,8 @@ void main()
                   }
                   break;
                case '5':
-                  if ( data_ready == 3 )
-                  {
-                     send_data();
-                  }
-                  else
-                  {
-                     printf(usb_cdc_putc, "#NODATA\n");
-                  }
-                  break;
+                 send_data();
+                 break;
                default:
                   break;
             }

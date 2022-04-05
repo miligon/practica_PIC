@@ -129,13 +129,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         k = 5
         
         alpha = 30
-        for x in range(0, 1000,1):
+        for x in range(0, 1000,10):
             x= x
             self.datos_rpm[0].append(x)
             #sobre amortiguado
-            self.datos_rpm[1].append(k*(1-math.exp(-1*(x/alpha)))) 
+            self.datos_rpm[1].append(int((k*(1-math.exp(-1*(x/alpha))))*1000) )
             # Sub amortiguado
             #self.datos_rpm[1].append(k*(1-(((math.exp(-1*z*wn*x))/(math.sqrt(1-(z*z))))*math.sin((wn*x)+(math.pi/2))))) 
+        print(self.datos_rpm[1])
             
     # Grafica los datos contenidos en datos_rpm
     def graficar(self):
@@ -230,7 +231,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     data = pair.split(b',')
                     t = int.from_bytes(data[0], byteorder="big")
                     rpm = int.from_bytes(data[1], byteorder="big")
-                    self.datos_rpm[0].append(t/10)
+                    self.datos_rpm[0].append(t)
                     self.datos_rpm[1].append(rpm)
             #Imprime la informacion recibida y la gráfica
             print(self.datos_rpm)

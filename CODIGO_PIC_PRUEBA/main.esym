@@ -1,7 +1,7 @@
-D G "__PCH__" 2 46 ""5.025""
-D G "__DEVICE__" 2 46 "4550"
-D G "__DATE__" 2 46 ""03-abr.-22""
-D G "__TIME__" 2 46 ""17:20:12"" "Standard Header file for the PIC18F4550 device ////////////////"
+D G "__PCH__" 0 193 ""5.025""
+D G "__DEVICE__" 0 193 "4550"
+D G "__DATE__" 0 193 ""05-abr.-22""
+D G "__TIME__" 0 193 ""15:33:01"" "Standard Header file for the PIC18F4550 device ////////////////"
 c L "set_tris_a" 2 3 6 "FUNCTION"
 v L "value" 2 45 "int8" `54 
 f B "set_tris_a" 2 45 "void(int8 value)" `53 
@@ -912,7 +912,8 @@ d G "INT_EEPROM" 2 831 "0x00A010"
 d G "INT_OSCF" 2 832 "0x00A080"
 d G "INT_SPP" 2 833 "0x009D80"
 d G "INT_USB" 2 834 "0x00A020"
-D G "LED" 1 8 "PIN_B2"
+D G "LED" 1 7 "PIN_B2"
+D G "LED2" 1 8 "PIN_B1"
 D G "MOTOR" 1 9 "PIN_B3"
 D G "SENSOR" 1 10 "PIN_B0"
 D G "DELAY" 1 11 "500"
@@ -1897,27 +1898,23 @@ V G "c" 0 5 "int8" `1151
 V G "motor_status" 0 6 "int1" `1152 
 V G "pulsos" 0 8 "int16" `1153 
 V G "indice" 0 9 "int16" `1154 
-V G "data" 0 10 "int16[278]" `1155  "Buffer para datos medicion 556 bytes RAM"
+V G "data" 0 10 "int16[1]" `1155 
 V G "data_ready" 0 11 "int8" `1156 
-C L "timer0" 0 6 4 "FUNCTION"
-F G "timer0" 0 18 "void()" `1157  "Toma una medidicon cada 5.4ms"
-F G "EXT_isr" 0 35 "void()" `1158  "Cuenta los pulsos en B0 solo cuando data_ready = 1"
-F G "recibir" 0 45 "int8()" `1159  "Recibe una trama a traves del USB Serial"
+C L "recibir" 0 6 4 "FUNCTION"
+F G "recibir" 0 17 "int8()" `1157  "Recibe una trama a traves del USB Serial"
 C L "recibir" 0 6 1 "FUNCTION"
 C L "recibir" 0 6 1 "FUNCTION"
 C L "recibir" 0 6 1 "FUNCTION"
-F G "toggle_motor" 0 80 "void()" `1160 
-V L "ms" 0 85 "int8" `1162 
-F G "blink_led" 0 86 "void(int8 ms)" `1161 
-F G "inicia_medicion" 0 94 "void()" `1163  "Inicializa las variables para la medicion"
-C L "inicia_medicion" 0 6 1 "FUNCTION"
-C L "inicia_medicion" 0 6 1 "FUNCTION"
-C L "inicia_medicion" 0 6 1 "FUNCTION"
-F G "finaliza_medicion" 0 113 "void()" `1164 
+F G "toggle_motor" 0 52 "void()" `1158 
+V L "ms" 0 57 "int8" `1160 
+F G "blink_led" 0 58 "void(int8 ms)" `1159 
+F G "inicia_medicion" 0 66 "void()" `1161  "Inicializa las variables para la medicion"
+C L "inicia_medicion" 0 6 6 "FUNCTION"
+F G "finaliza_medicion" 0 85 "void()" `1162 
 C L "finaliza_medicion" 0 6 1 "FUNCTION"
-F G "send_data" 0 123 "void()" `1165  "Envia la informacion"
-V L "ms" 0 125 "int16" `1166 
-V L "i" 0 127 "int16" `1167 
+F G "send_data" 0 95 "void()" `1163  "Envia la informacion"
+V L "ms" 0 97 "int16" `1164 
+V L "i" 0 99 "int16" `1165 
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
@@ -1925,7 +1922,7 @@ C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
-F G "MAIN" 0 145 "void()" `1168  "Inicializa CDC"
+F G "MAIN" 0 117 "void()" `1166  "Inicializa CDC"
 C L "MAIN" 0 6 1 "FUNCTION"
 C L "MAIN" 0 6 1 "FUNCTION"
 C L "MAIN" 0 6 2 "FUNCTION"

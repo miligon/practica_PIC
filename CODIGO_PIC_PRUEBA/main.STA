@@ -1,19 +1,19 @@
 
-ROM used:   5832/32768 (18%)
-            5832/32768 (18%) including unused fragments
+ROM used:   5884/32768 (18%)
+            5884/32768 (18%) including unused fragments
 
             0.8 Average locations per line
-            5.2 Average locations per statement
+            5.3 Average locations per statement
 
-RAM used:   1042/2048 (51%) at main() level
-            1092/2048 (53%) worst case
+RAM used:   686/2048 (33%) at main() level
+            736/2048 (36%) worst case
 
 Stack used: 14 worst case (7 in main + 7 for interrupts)
 Stack size: 31
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
-  227   111  10  main.c
+  192    92   8  main.c
    42     0   0  main.h
   837     0   0  C:\Program Files (x86)\PICC\Devices\18F4550.h
   871   137  12  C:\Program Files (x86)\PICC\Drivers\usb_cdc.h
@@ -27,7 +27,7 @@ Lines Stmts  %   Files
    32    43   4  C:\Program Files (x86)\PICC\Drivers\stddef.h
    28   108  10  C:\Program Files (x86)\PICC\Drivers\ctype.h
 ----- -----
- 7055  1126 Total
+ 7020  1107 Total
 
 Page ROM  %  RAM    Vol Diff  Functions:
 ---- --- --- ---    --- ----  ----------
@@ -41,14 +41,14 @@ Page ROM  %  RAM    Vol Diff  Functions:
 0     18   0    0             @const783
 0     24   0    0             @const786
 0     34   0    0             @const791
-0     34   0    5   1195  7.6  @MUL1616
+0     34   0    5             @MUL1616
 0     86   1    4    139  4.3  usb_tbe
 0     42   0    1    172  3.4  usb_detach
 0     46   0    0    236  2.3  usb_attach
 0      6   0    0     16  1.0  usb_init_cs
 0     36   0    1    375  5.2  usb_task
 0     14   0    0     61  2.5  usb_init
-0    292   3    9   1092  5.4  usb_flush_in
+0    292   2    9   1092  5.4  usb_flush_in
 0    158   1   10    344  6.1  usb_put_packet
 0    256   2    9    914  5.0  usb_flush_out
 0     68   1    3     66  2.7  usb_rx_packet_size
@@ -94,45 +94,42 @@ Page ROM  %  RAM    Vol Diff  Functions:
 0     56   0    4    228  4.8  _usb_cdc_putc_fast_noflush
 0     24   0    1     52  2.0  usb_cdc_putc_fast
 0     18   0    1     80  3.1  usb_cdc_putc
-0    106   1    2    163  5.3  timer0
-0     28   0    0     61  2.3  EXT_isr
 0    148   1    2    488  7.5  recibir
 0     18   0    0     48  2.1  toggle_motor
 0     24   0    1     78  1.3  blink_led
-0     46   0    0    202  2.7  inicia_medicion
+0     34   0    0    100  2.1  inicia_medicion
 0     30   0    0    100  2.1  finaliza_medicion
-0    238   2    4    501  6.3  send_data
-0    312   3    0   1195  7.6  MAIN
-0      6   0    0             @const1171
+0    232   2    4    501  6.3  send_data
+0    550   5    0   1090  7.6  MAIN
+0      6   0    0             @const1169
 0     32   0    2             @PSTRINGC_661
+0      6   0    0             @const1171
+0      6   0    0             @const1172
 0      6   0    0             @const1173
 0      6   0    0             @const1174
-0      6   0    0             @const1175
-0      6   0    0             @const1176
-0      8   0    0             @const1177
-0      8   0    0             @const1178
-0     12   0    0             @const1179
-0     10   0    0             @const1180
+0      8   0    0             @const1175
+0      8   0    0             @const1176
+0     12   0    0             @const1177
  Inline         0             @cinit1
 
 Program metrics:
-    Functions               62
-    Statements              1126
+    Functions               59
+    Statements              1107
     Comments                5870
-    Volume (V)              47398
-    Difficulty (D)          274.7
-    Effort to implement (E) 13019005
-    Time to implement (T)   200 hours, 55 minutes
-    Est Delivered Bugs (B)  18
-    Cyclomatic Complexity   161
-    Maintainability (MI)    119
+    Volume (V)              44020
+    Difficulty (D)          258.4
+    Effort to implement (E) 11373448
+    Time to implement (T)   175 hours, 31 minutes
+    Est Delivered Bugs (B)  17
+    Cyclomatic Complexity   143
+    Maintainability (MI)    101
 
  Segment     Used  Free
 -----------  ----  ----
 00000-00002     4  0  
 00004-00006     4  0  
-00008-000C4   190  0  
-000C6-07FFE  5634  26936  
+00008-000AC   166  0  
+000AE-07FFE  5710  26884  
 
 
 

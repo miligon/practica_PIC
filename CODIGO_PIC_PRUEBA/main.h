@@ -1,11 +1,11 @@
 #include <18F4550.h>
 #device ADC=16
 
-
 #fuses HSPLL,NOWDT,NOBROWNOUT,NOPROTECT,NOLVP,NODEBUG,USBDIV,PLL3,CPUDIV1,VREGEN,MCLR,NOPBADEN
 
 #use delay(clock=48MHz,crystal=12MHz,USB_FULL)
 #define LED   PIN_B2
+#define LED2   PIN_B1
 #define MOTOR PIN_B3
 #define SENSOR PIN_B0
 #define DELAY 500
