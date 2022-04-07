@@ -6,12 +6,40 @@ char c = 0;
 int1 motor_status = 0; // Guarda el estado del motor
 
 volatile int16 pulsos = 0; // contador de pulsos interrupcionj
+volatile int16 rev = 0;
 volatile int16 indice = 0; // indice datos medicion
-int16 data[]={0, 1417, 2432, 3160, 3682, 4055, 4323, 4515, 4652, 4751, 4821, 4872, 4908, 4934, 4952, 4966, 4975, 4982, 4987, 4991, 4993, 4995, 4996, 4997, 4998, 4998, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999};
+volatile int16 data[250];
 volatile int8 data_ready = 0; // bandera para saber el estado de la medicion
                               // 0 -> No se ha realizado medicion
                               // 1 -> Medicion en proceso
                               // 2 -> Medicion finalizada
+#INT_RTCC
+void timer0(void)
+{
+   if ( indice < 250 && data_ready == 1)
+   {
+      data[indice] = pulsos;
+      pulsos = 0;
+      indice++; 
+      //output_toggle(LED2);
+   }
+   else
+   {
+      data_ready = 2;
+
+   }
+   set_timer0(64597);
+   output_toggle(LED2);
+}
+
+#INT_EXT
+void  EXT_isr(void) 
+{
+   if ( data_ready == 1)
+   {
+      pulsos++;   
+   }
+}
 
 char recibir()
 {
@@ -70,24 +98,26 @@ void inicia_medicion()
    indice = 0;
    
    //Configura el Timer0
-   //setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);      //5.4 ms overflow
+   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_256);      //5.4 ms overflow
+   set_timer0(64597);
 
-   //enable_interrupts(INT_EXT);
-   //enable_interrupts(INT_RTCC);
-   //enable_interrupts(GLOBAL);
+   enable_interrupts(INT_EXT);
+   enable_interrupts(INT_RTCC);
+   enable_interrupts(GLOBAL);
    
    // Activa el motor
    motor_status = 1;
-   output_bit(MOTOR, motor_status);
+   output_high(MOTOR);
 }
 
 void finaliza_medicion()
 {
    disable_interrupts(INT_EXT);
    disable_interrupts(INT_RTCC);
+   disable_interrupts(GLOBAL);
    // Desactiva el motor
+   output_low(MOTOR);
    motor_status = 0;
-   output_bit(MOTOR, motor_status);
    data_ready = 3;
 }
 
@@ -96,15 +126,16 @@ void send_data()
    //Envia la informacion
    int16 ms = 0;
    usb_cdc_putc(35); //#
-   for (int16 i = 0; i < 100; i++)
+   int16 rps = 0;
+   for (int16 i = 0; i < 250; i++)
    {
       usb_cdc_putc((ms&0xFF00)>>8); //1 byte MSB  tiempo
       usb_cdc_putc(ms&0xFF);        //1 byte LSB  tiempo
       usb_cdc_putc(',');            // separador ,  
       usb_cdc_putc((data[i]&0xFF00)>>8); //1 byte MSB  rpms
       usb_cdc_putc(data[i]&0xFF);        //1 byte LSB  rpms
-      ms = ms + 1;
-      if (i != 277)
+      ms = ms + 20;
+      if (i != 250)
       {
          usb_cdc_putc(36); //$
       }
@@ -115,6 +146,14 @@ void send_data()
 
 void main()
 {
+   input_state(pin_B0);
+   delay_ms(500);
+   blink_led(1000);
+   inicia_medicion();
+   while(data_ready==1){blink_led(10);}
+   finaliza_medicion();
+   output_low(LED2);
+   
    //Inicializa CDC
    usb_init();
    usb_cdc_init();
@@ -122,14 +161,7 @@ void main()
 
    //Example blinking LED program
    while(true)
-   {
-      if (data_ready == 2)
-      {
-         //Cuando finaliza una medicion deshabilita las interrupciones
-         finaliza_medicion();
-      }
-      //blink_led(50);
-      
+   {     
       // Recibe datos del USB serial
       if (recibir())
       {

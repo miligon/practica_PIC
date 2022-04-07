@@ -1,7 +1,7 @@
-D G "__PCH__" 0 193 ""5.025""
-D G "__DEVICE__" 0 193 "4550"
-D G "__DATE__" 0 193 ""05-abr.-22""
-D G "__TIME__" 0 193 ""15:33:01"" "Standard Header file for the PIC18F4550 device ////////////////"
+D G "__PCH__" 0 227 ""5.025""
+D G "__DEVICE__" 0 227 "4550"
+D G "__DATE__" 0 227 ""06-abr.-22""
+D G "__TIME__" 0 227 ""17:06:05"" "Standard Header file for the PIC18F4550 device ////////////////"
 c L "set_tris_a" 2 3 6 "FUNCTION"
 v L "value" 2 45 "int8" `54 
 f B "set_tris_a" 2 45 "void(int8 value)" `53 
@@ -1897,24 +1897,31 @@ V G "i" 0 4 "int8" `1150
 V G "c" 0 5 "int8" `1151 
 V G "motor_status" 0 6 "int1" `1152 
 V G "pulsos" 0 8 "int16" `1153 
-V G "indice" 0 9 "int16" `1154 
-V G "data" 0 10 "int16[1]" `1155 
-V G "data_ready" 0 11 "int8" `1156 
-C L "recibir" 0 6 4 "FUNCTION"
-F G "recibir" 0 17 "int8()" `1157  "Recibe una trama a traves del USB Serial"
+V G "rev" 0 9 "int16" `1154 
+V G "indice" 0 10 "int16" `1155 
+V G "data" 0 11 "int16[250]" `1156 
+V G "data_ready" 0 12 "int8" `1157 
+C L "timer0" 0 6 4 "FUNCTION"
+F G "timer0" 0 18 "void()" `1158 
+C L "timer0" 0 6 1 "FUNCTION"
+F G "EXT_isr" 0 37 "void()" `1159 
+F G "recibir" 0 45 "int8()" `1160  "Recibe una trama a traves del USB Serial"
 C L "recibir" 0 6 1 "FUNCTION"
 C L "recibir" 0 6 1 "FUNCTION"
 C L "recibir" 0 6 1 "FUNCTION"
-F G "toggle_motor" 0 52 "void()" `1158 
-V L "ms" 0 57 "int8" `1160 
-F G "blink_led" 0 58 "void(int8 ms)" `1159 
-F G "inicia_medicion" 0 66 "void()" `1161  "Inicializa las variables para la medicion"
-C L "inicia_medicion" 0 6 6 "FUNCTION"
-F G "finaliza_medicion" 0 85 "void()" `1162 
+F G "toggle_motor" 0 80 "void()" `1161 
+V L "ms" 0 85 "int8" `1163 
+F G "blink_led" 0 86 "void(int8 ms)" `1162 
+F G "inicia_medicion" 0 94 "void()" `1164  "Inicializa las variables para la medicion"
+C L "inicia_medicion" 0 6 1 "FUNCTION"
+C L "inicia_medicion" 0 6 1 "FUNCTION"
+C L "inicia_medicion" 0 6 1 "FUNCTION"
+F G "finaliza_medicion" 0 114 "void()" `1165 
 C L "finaliza_medicion" 0 6 1 "FUNCTION"
-F G "send_data" 0 95 "void()" `1163  "Envia la informacion"
-V L "ms" 0 97 "int16" `1164 
-V L "i" 0 99 "int16" `1165 
+F G "send_data" 0 125 "void()" `1166  "Envia la informacion"
+V L "ms" 0 127 "int16" `1167 
+V L "rps" 0 129 "int16" `1168 
+V L "i" 0 130 "int16" `1169 
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
@@ -1922,7 +1929,7 @@ C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
 C L "send_data" 0 6 1 "FUNCTION"
-F G "MAIN" 0 117 "void()" `1166  "Inicializa CDC"
+F G "MAIN" 0 148 "void()" `1170 
 C L "MAIN" 0 6 1 "FUNCTION"
 C L "MAIN" 0 6 1 "FUNCTION"
 C L "MAIN" 0 6 2 "FUNCTION"
