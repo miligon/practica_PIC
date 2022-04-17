@@ -92,7 +92,7 @@ class Ui_MainWindow(object):
         self.groupBox_2.setTitle(_translate("MainWindow", "Acciones"))
         self.btnAdquirir.setText(_translate("MainWindow", "Adquirir"))
         self.btnMotor.setText(_translate("MainWindow", "Motor: OFF"))
-        self.groupBox_3.setTitle(_translate("MainWindow", "Seleccion tipo de sistema"))
+        self.groupBox_3.setTitle(_translate("MainWindow", "De click en el tipo de sistema para calcular constantes"))
         self.radioSobre.setText(_translate("MainWindow", "Sobreamortiguado"))
         self.radioSub.setText(_translate("MainWindow", "Subamortiguado"))
         self.label.setText(_translate("MainWindow", "Wn"))
