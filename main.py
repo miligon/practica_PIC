@@ -60,6 +60,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             alpha = 0.632*val_estable
             t_alpha = 1
             print(alpha)
+            y0 = alpha
             diferencias = [[],[]]
             for i in range(longitud):
                 dato = self.datos_rpm[1][i]
@@ -86,6 +87,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.graficar()
             self.axes = plt.scatter(aproximacion[0], aproximacion[1], zorder=500, s=20, color='blue')
             self.axes = plt.plot(aproximacion[0], aproximacion[1], 'r', lw=1, color='lightgray')
+            self.axes = plt.scatter(alpha, y0, zorder=502, s=20, color='yellow')
+            self.axes = plt.text(alpha, y0, "  alpha : 63.2%", zorder=501)
             # Refresca la información del Widget
             self.layout.removeWidget(self.grafica)
             self.grafica = FigureCanvas(self.figure)
